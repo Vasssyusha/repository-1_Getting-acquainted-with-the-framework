@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
   <head>
     {% block title %}<title>Local Library</title>{% endblock %}
     <meta charset="utf-8" />
@@ -10,7 +10,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <!-- Добавление дополнительного статического CSS файла -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
   </head>
@@ -18,41 +17,37 @@
   <body>
     <div class="container-fluid">
       <div class="row">
-        <!-- Левая колонка (сайдбар) -->
         <div class="col-sm-2">
           {% block sidebar %}
             <ul class="sidebar-nav">
-              <li><a href="{% url 'index' %}">Home</a></li>
-              <li><a href="{% url 'books' %}">All books</a></li>
-              <li><a href="{% url 'authors' %}">All authors</a></li>
+              <li><a href="{% url 'index' %}">Главная</a></li>
+              <li><a href="{% url 'books' %}">Все книги</a></li>
+              <li><a href="{% url 'authors' %}">Все авторы</a></li>
             </ul>
           {% endblock %}
         </div>
 
-        <!-- Правая колонка (основной контент) -->
         <div class="col-sm-10 ">
-          <!-- Блок контента -->
           {% block content %}{% endblock %}
 
-          <!-- Блок пагинации (СЮДА его нужно было вставить) -->
           {% block pagination %}
             {% if is_paginated %}
               <div class="pagination">
                 <span class="page-links">
                   {% if page_obj.has_previous %}
-                    <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+                    <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">назад</a>
                   {% endif %}
                   <span class="page-current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
                   </span>
                   {% if page_obj.has_next %}
-                    <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+                    <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">вперед</a>
                   {% endif %}
                 </span>
               </div>
             {% endif %}
           {% endblock %}
-        </div> <!-- Закрывающий тег для col-sm-10 -->
+        </div>
 
       </div>
     </div>

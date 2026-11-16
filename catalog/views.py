@@ -11,6 +11,9 @@ def index(request):
     num_genres = Genre.objects.all().count() #проверь себя раздел 5
     num_books_with_word = Book.objects.filter(title__icontains='Дом').count() #норм работает только для английского
 
+    num_visits = request.session.get('num_visits', 0)
+    request.session['num_visits'] = num_visits + 1
+
     context = {
         'num_books': num_books,
         'num_instances': num_instances,
@@ -18,6 +21,7 @@ def index(request):
         'num_authors': num_authors,
         'num_genres': num_genres,
         'num_books_with_word': num_books_with_word,
+        'num_visits': num_visits,
     }
 
     return render(request, 'index.html', context=context)
@@ -35,3 +39,4 @@ class AuthorListView(generic.ListView):
 
 class AuthorDetailView(generic.DetailView):
     model = Author
+

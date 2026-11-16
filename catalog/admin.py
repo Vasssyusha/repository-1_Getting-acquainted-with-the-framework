@@ -21,15 +21,16 @@ class BookAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'display_genre')
     inlines = [BooksInstanceInline]
 
+
 @admin.register(BookInstance)
 class BookInstanceAdmin(admin.ModelAdmin):
-    list_display = ('id', 'book', 'status', 'due_back') #дз 4 раздел
+    list_display = ('id', 'book', 'status', 'due_back')
     list_filter = ('status', 'due_back')
     fieldsets = (
         (None, {
             'fields': ('book', 'imprint', 'id')
         }),
-        ('Availability', {
+        ('Доступность', {
             'fields': ('status', 'due_back')
         }),
     )

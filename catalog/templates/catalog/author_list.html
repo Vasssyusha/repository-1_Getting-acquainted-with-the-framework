@@ -1,7 +1,7 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Author List</h1>
+  <h1>Список авторов</h1>
 
   {% if author_list %}
     <ul>
@@ -13,6 +13,6 @@
       {% endfor %}
     </ul>
   {% else %}
-    <p>There are no authors in the library.</p>
+    <p>В библиотеке пока нет авторов.</p>
   {% endif %}
 {% endblock %}
