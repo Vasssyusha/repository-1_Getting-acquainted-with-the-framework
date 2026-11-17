@@ -1,6 +1,8 @@
 import uuid
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
+from datetime import date
 
 
 class Language(models.Model):
@@ -111,6 +113,14 @@ class BookInstance(models.Model):
     imprint = models.CharField(max_length=200, verbose_name="Издательство")
     due_back = models.DateField(verbose_name="Дата возврата", null=True, blank=True)
 
+    borrower = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Читатель"  # Добавили русское название
+    )
+
     LOAN_STATUS = (
         ('m', 'На обслуживании'),
         ('o', 'Выдана'),
@@ -131,6 +141,14 @@ class BookInstance(models.Model):
         ordering = ["due_back"]
         verbose_name = "Экземпляр книги"
         verbose_name_plural = "Экземпляры книг"
+        permissions = (("can_mark_returned", "Отметить книгу как возвращенную"),)
+
+    @property
+    def is_overdue(self):
+        if self.due_back and date.today() > self.due_back:
+            return True
+        return False
 
     def __str__(self):
         return f"{self.id} ({self.book.title})"
+
