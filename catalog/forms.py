@@ -6,16 +6,17 @@ import datetime
 
 class RenewBookForm(forms.Form):
     renewal_date = forms.DateField(
-        help_text="Enter a date between now and 4 weeks (default 3)."
+        label='Дата продления',
+        help_text="Введите дату в диапазоне от сегодняшнего дня до 4 недель (по умолчанию 3).",
     )
 
     def clean_renewal_date(self):
         data = self.cleaned_data['renewal_date']
 
         if data < datetime.date.today():
-            raise ValidationError(_('Invalid date - renewal in past'))
+            raise ValidationError(_('Неверная дата — продление в прошлом'))
 
         if data > datetime.date.today() + datetime.timedelta(weeks=4):
-            raise ValidationError(_('Invalid date - renewal more than 4 weeks ahead'))
+            raise ValidationError(_('Неверная дата — продление более чем на 4 недели вперёд'))
 
         return data
