@@ -1,0 +1,18 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Все экземпляры книг</h1>
+<ul>
+    {% for bookinst in bookinstance_list %}
+    <li>
+        <a href="{{ bookinst.book.get_absolute_url }}">{{ bookinst.book.title }}</a>
+        — {{ bookinst.imprint }}
+        (статус: {{ bookinst.get_status_display }})
+        {% if perms.catalog.can_mark_returned %}
+            | <a href="{% url 'bookinstance_update' bookinst.id %}">Редактировать</a>
+            | <a href="{% url 'bookinstance_delete' bookinst.id %}">Удалить</a>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

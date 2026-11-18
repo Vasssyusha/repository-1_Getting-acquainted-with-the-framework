@@ -19,4 +19,19 @@ urlpatterns = [
     path('book/create/', views.BookCreate.as_view(), name='book_create'),
     path('book/<int:pk>/update/', views.BookUpdate.as_view(), name='book_update'),
     path('book/<int:pk>/delete/', views.BookDelete.as_view(), name='book_delete'),
+
+    path('genre/create/', views.GenreCreate.as_view(), name='genre_create'),
+    path('genre/<int:pk>/update/', views.GenreUpdate.as_view(), name='genre_update'),
+    path('genre/<int:pk>/delete/', views.GenreDelete.as_view(), name='genre_delete'),
+    path('genres/', views.GenreListView.as_view(), name='genres'),
+
+    path('language/create/', views.LanguageCreate.as_view(), name='language_create'),
+    path('language/<int:pk>/update/', views.LanguageUpdate.as_view(), name='language_update'),
+    path('language/<int:pk>/delete/', views.LanguageDelete.as_view(), name='language_delete'),
+    path('languages/', views.LanguageListView.as_view(), name='languages'),
+
+    path('bookinstance/create/', views.BookInstanceCreate.as_view(), name='bookinstance_create'),
+    path('bookinstance/<uuid:pk>/update/', views.BookInstanceUpdate.as_view(), name='bookinstance_update'),
+    path('bookinstance/<uuid:pk>/delete/', views.BookInstanceDelete.as_view(), name='bookinstance_delete'),
+    path('bookinstances/', views.BookInstanceListView.as_view(), name='bookinstances'),
 ]

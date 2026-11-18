@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.contrib.auth.decorators import permission_required
 import datetime
 
-from .models import Book, Author, BookInstance, Genre
+from .models import Book, Author, BookInstance, Genre, Language
 from .forms import RenewBookForm
 
 
@@ -39,6 +39,21 @@ def index(request):
 class BookListView(generic.ListView):
     model = Book
     paginate_by = 2 #по туториалу 10, но чтоб было видно 2
+
+
+class GenreListView(generic.ListView):
+    model = Genre
+    paginate_by = 2
+
+
+class LanguageListView(generic.ListView):
+    model = Language
+    paginate_by = 2
+
+
+class BookInstanceListView(generic.ListView):
+    model = BookInstance
+    paginate_by = 2
 
 
 class BookDetailView(generic.DetailView):
@@ -131,4 +146,63 @@ class BookUpdate(PermissionRequiredMixin, UpdateView):
 class BookDelete(PermissionRequiredMixin, DeleteView):
     model = Book
     success_url = reverse_lazy('books')
+    permission_required = 'catalog.can_mark_returned'
+
+
+# ===== Genre CRUD =====
+class GenreCreate(PermissionRequiredMixin, CreateView):
+    model = Genre
+    fields = ['name']
+    permission_required = 'catalog.can_mark_returned'
+    success_url = reverse_lazy('genres')  # <-- ДОБАВЛЕНО
+
+class GenreUpdate(PermissionRequiredMixin, UpdateView):
+    model = Genre
+    fields = ['name']
+    permission_required = 'catalog.can_mark_returned'
+    success_url = reverse_lazy('genres')  # <-- ДОБАВЛЕНО (на всякий случай)
+
+class GenreDelete(PermissionRequiredMixin, DeleteView):
+    model = Genre
+    success_url = reverse_lazy('genres')
+    permission_required = 'catalog.can_mark_returned'
+
+
+class LanguageCreate(PermissionRequiredMixin, CreateView):
+    model = Language
+    fields = ['name']
+    permission_required = 'catalog.can_mark_returned'
+    success_url = reverse_lazy('languages')
+
+
+class LanguageUpdate(PermissionRequiredMixin, UpdateView):
+    model = Language
+    fields = ['name']
+    permission_required = 'catalog.can_mark_returned'
+    success_url = reverse_lazy('languages')
+
+
+class LanguageDelete(PermissionRequiredMixin, DeleteView):
+    model = Language
+    success_url = reverse_lazy('languages')
+    permission_required = 'catalog.can_mark_returned'
+
+
+class BookInstanceCreate(PermissionRequiredMixin, CreateView):
+    model = BookInstance
+    fields = ['book', 'imprint', 'status']
+    permission_required = 'catalog.can_mark_returned'
+    success_url = reverse_lazy('bookinstances')
+
+
+class BookInstanceUpdate(PermissionRequiredMixin, UpdateView):
+    model = BookInstance
+    fields = ['book', 'imprint', 'status', 'due_back', 'borrower']
+    permission_required = 'catalog.can_mark_returned'
+    success_url = reverse_lazy('bookinstances')
+
+
+class BookInstanceDelete(PermissionRequiredMixin, DeleteView):
+    model = BookInstance
+    success_url = reverse_lazy('bookinstances')
     permission_required = 'catalog.can_mark_returned'
