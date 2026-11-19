@@ -118,7 +118,7 @@ class BookInstance(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        verbose_name="Читатель"  # Добавили русское название
+        verbose_name="Читатель"
     )
 
     LOAN_STATUS = (

@@ -116,7 +116,7 @@ def renew_book_librarian(request, pk):
 class AuthorCreate(PermissionRequiredMixin, CreateView):
     model = Author
     fields = '__all__'
-    initial = {'date_of_death': '12/10/2016'}
+    initial = {'date_of_death': '12.10.2016'}
     permission_required = 'catalog.can_mark_returned'
 
 
@@ -130,6 +130,7 @@ class AuthorDelete(PermissionRequiredMixin, DeleteView):
     model = Author
     success_url = reverse_lazy('authors')
     permission_required = 'catalog.can_mark_returned'
+
 
 class BookCreate(PermissionRequiredMixin, CreateView):
     model = Book
@@ -149,18 +150,19 @@ class BookDelete(PermissionRequiredMixin, DeleteView):
     permission_required = 'catalog.can_mark_returned'
 
 
-# ===== Genre CRUD =====
 class GenreCreate(PermissionRequiredMixin, CreateView):
     model = Genre
     fields = ['name']
     permission_required = 'catalog.can_mark_returned'
-    success_url = reverse_lazy('genres')  # <-- ДОБАВЛЕНО
+    success_url = reverse_lazy('genres')
+
 
 class GenreUpdate(PermissionRequiredMixin, UpdateView):
     model = Genre
     fields = ['name']
     permission_required = 'catalog.can_mark_returned'
-    success_url = reverse_lazy('genres')  # <-- ДОБАВЛЕНО (на всякий случай)
+    success_url = reverse_lazy('genres')
+
 
 class GenreDelete(PermissionRequiredMixin, DeleteView):
     model = Genre
